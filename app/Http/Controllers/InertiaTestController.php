@@ -14,10 +14,15 @@ class InertiaTestController extends Controller
 
 
     public function show($id) {
-        dd($id);
+        // dd($id);
         return Inertia::render('Inertia/Show', [
             'id' => $id 
         ]);
+    }
+
+    public function create() 
+    {
+        return Inertia::render('Inertia/Create'); 
     }
 
     public function store(Request $request)
