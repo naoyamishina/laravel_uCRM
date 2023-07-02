@@ -4,7 +4,7 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
 // import FlashMessage from '@/Components/FlashMessage.vue'
 
 defineProps({
-  items: Array
+    items: Array
 })
 
 </script>
