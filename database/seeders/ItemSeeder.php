@@ -17,7 +17,9 @@ class ItemSeeder extends Seeder
     {
         DB::table('items')->insert([
             [
-            'name' => 'カット', 'memo' => 'カットの詳細', 'price' => 6000 ],
+            'name' => 'カット', 
+            'memo' => 'カットの詳細', 
+            'price' => 6000 ],
             [
             'name' => 'カラー',
             'memo' => 'カラーの詳細',
