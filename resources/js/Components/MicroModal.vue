@@ -1,5 +1,13 @@
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios'
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  axios.get('/api/user') .then( res => {
+    console.log(res) 
+  })
+})
 
 const isShow = ref(false)
 
