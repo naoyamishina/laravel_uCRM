@@ -8,7 +8,7 @@ import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
 import MicroModal from '@/Components/MicroModal.vue'
 
 const props = defineProps({
-  'customers': Array,
+  // 'customers': Array,
   'items': Array,
   errors: Object
 })
@@ -90,11 +90,6 @@ const storePurchase = () => {
                               
                               会員名<br>
                               <MicroModal />
-                              <select name="customer" v-model="form.customer_id">
-                                <option v-for="customer in customers" :value="customer.id" :key="customer.id">
-                                  {{ customer.id }} : {{ customer.name }}
-                                </option> 
-                              </select><br>
 
                             <div class="w-full mt-8 mx-auto overflow-auto">
                               <table class="table-auto w-full text-left whitespace-no-wrap">
