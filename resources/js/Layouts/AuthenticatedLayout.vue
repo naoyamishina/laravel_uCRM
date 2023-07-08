@@ -45,7 +45,7 @@ const showingNavigationDropdown = ref(false);
                                     顧客一覧
                                 </NavLink>
                                 <NavLink :href="route('analysis')" :active="route().current('analysis')">
-                                    顧客一覧
+                                    データ分析
                                 </NavLink>
                             </div>
                         </div>
