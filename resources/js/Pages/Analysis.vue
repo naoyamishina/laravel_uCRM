@@ -1,8 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
-import { reactive, onMounted } from 'vue' 
+import { reactive, onMounted, toRef } from 'vue' 
 import { getToday } from '@/common'
+import Chart from '@/Components/Chart.vue'
 
 
 onMounted(() => {
@@ -16,6 +17,8 @@ const form = reactive({
     type: 'perDay'
 })
 
+const data = reactive({})
+
 const getData = async () => { try{
     await axios.get('/api/analysis/', { 
         params: {
@@ -25,7 +28,7 @@ const getData = async () => { try{
         } 
     })
     .then( res => {
-        // data.value = res.data 
+        data.data = res.data.data
         console.log(res.data)
     })
     } catch (e){
@@ -54,6 +57,21 @@ const getData = async () => { try{
                     </div>
                 </div>
             </div>
+        </div>
+
+        <Chart />
+
+        <div v-show="data.data">
+        <tr v-for="item in data.data" :key="item.date">
+            <thead>
+            <td>日付</td>
+            <td>合計</td> 
+            </thead>
+            <tbody>
+            <td>{{ item.date }} </td>
+            <td>{{ item.total }} </td> 
+            </tbody>
+        </tr>
         </div>
     </AuthenticatedLayout>
 </template>

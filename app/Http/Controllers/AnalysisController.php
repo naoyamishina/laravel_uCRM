@@ -33,7 +33,8 @@ class AnalysisController extends Controller
         $data = DB::table($subQuery)
         ->groupBy('date')
         ->selectRaw('date, sum(totalPerPurchase) as total') ->get();
-        dd($data);
+        
+        //dd($data);
 
         return Inertia::render('Analysis'); 
     }
