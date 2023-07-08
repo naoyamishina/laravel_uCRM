@@ -12,7 +12,26 @@ onMounted(() => {
 
 const form = reactive({ 
     startDate: null, 
-    endDate: null})
+    endDate: null,
+    type: 'perDay'
+})
+
+const getData = async () => { try{
+    await axios.get('/api/analysis/', { 
+        params: {
+        startDate: form.startDate, 
+        endDate: form.endDate, 
+        type: form.type
+        } 
+    })
+    .then( res => {
+        // data.value = res.data 
+        console.log(res.data)
+    })
+    } catch (e){
+    console.log(e.message) 
+    }
+}
 </script>
 
 <template>
@@ -27,7 +46,7 @@ const form = reactive({
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <form @submit.prevent="">
+                        <form @submit.prevent="getData">
                         From: <input type="date" name="startDate" v-model="form.startDate"> 
                         To: <input type="date" name="endDate" v-model="form.endDate"> 
                         <button>分析する</button>
