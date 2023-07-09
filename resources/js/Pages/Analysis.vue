@@ -52,6 +52,13 @@ const getData = async () => { try{
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <form @submit.prevent="getData">
+                            分析方法<br>
+                            <input type="radio" v-model="form.type" value="perDay" checked>
+                            <span class="mr-4">日別</span>
+                            <input type="radio" v-model="form.type" value="perMonth">
+                            <span class="mr-4">月別</span>
+                            <input type="radio" v-model="form.type" value="perYear">
+                            <span class="mr-4">年別</span>
                         From: <input type="date" name="startDate" v-model="form.startDate"> 
                         To: <input type="date" name="endDate" v-model="form.endDate"> 
                         <button>分析する</button>
