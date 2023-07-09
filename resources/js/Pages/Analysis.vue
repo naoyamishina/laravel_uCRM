@@ -29,7 +29,9 @@ const getData = async () => { try{
     })
     .then( res => {
         data.data = res.data.data
-        console.log(res.data)
+        data.labels = res.data.labels 
+        data.totals = res.data.totals
+        console.log(data.totals)
     })
     } catch (e){
     console.log(e.message) 
@@ -59,7 +61,9 @@ const getData = async () => { try{
             </div>
         </div>
 
-        <Chart />
+        <div v-show="data.data">
+            <Chart :data="data" />
+        </div>
 
         <div v-show="data.data">
         <tr v-for="item in data.data" :key="item.date">
