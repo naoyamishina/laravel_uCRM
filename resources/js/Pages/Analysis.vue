@@ -4,7 +4,7 @@ import { Head } from '@inertiajs/inertia-vue3';
 import { reactive, onMounted, toRef } from 'vue' 
 import { getToday } from '@/common'
 import Chart from '@/Components/Chart.vue'
-
+import ResultTable from '@/Components/ResultTable.vue';
 
 onMounted(() => {
     form.startDate = getToday() 
@@ -31,6 +31,7 @@ const getData = async () => { try{
         data.data = res.data.data
         data.labels = res.data.labels 
         data.totals = res.data.totals
+        data.type = res.data.type
         console.log(data.totals)
     })
     } catch (e){
@@ -59,6 +60,8 @@ const getData = async () => { try{
                             <span class="mr-4">月別</span>
                             <input type="radio" v-model="form.type" value="perYear">
                             <span class="mr-4">年別</span>
+                            <input type="radio" v-model="form.type" value="decile">
+                            <span class="mr-4">デシル分析</span>
                         From: <input type="date" name="startDate" v-model="form.startDate"> 
                         To: <input type="date" name="endDate" v-model="form.endDate"> 
                         <button>分析する</button>
@@ -70,19 +73,7 @@ const getData = async () => { try{
 
         <div v-show="data.data">
             <Chart :data="data" />
-        </div>
-
-        <div v-show="data.data">
-        <tr v-for="item in data.data" :key="item.date">
-            <thead>
-            <td>日付</td>
-            <td>合計</td> 
-            </thead>
-            <tbody>
-            <td>{{ item.date }} </td>
-            <td>{{ item.total }} </td> 
-            </tbody>
-        </tr>
+            <ResultTable :data="data" />
         </div>
     </AuthenticatedLayout>
 </template>
