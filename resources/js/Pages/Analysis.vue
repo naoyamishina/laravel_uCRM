@@ -27,15 +27,17 @@ const getData = async () => { try{
         params: {
         startDate: form.startDate, 
         endDate: form.endDate, 
-        type: form.type
+        type: form.type,
+        rfmPrms: form.rfmPrms
         } 
     })
     .then( res => {
         data.data = res.data.data
-        data.labels = res.data.labels 
+        console.log(res.data)
+        if(res.data.labels){ data.labels = res.data.labels } 
+        if(res.data.eachCount){ data.eachCount = res.data.eachCount }
         data.totals = res.data.totals
         data.type = res.data.type
-        console.log(data.totals)
     })
     } catch (e){
     console.log(e.message) 
@@ -76,11 +78,6 @@ const getData = async () => { try{
             </div>
         </div>
 
-        <div v-show="data.data">
-            <Chart :data="data" />
-            <ResultTable :data="data" />
-        </div>
-
         <div v-if="form.type === 'rfm' ">
             <table class="mx-auto">
             <thead>
@@ -119,5 +116,12 @@ const getData = async () => { try{
             </tbody>
             </table>
         </div> 
+
+        <div v-show="data.data">
+            <div v-if="data.type != 'rfm' ">
+                <Chart :data="data" /> 
+            </div>
+            <ResultTable :data="data" />
+        </div>
     </AuthenticatedLayout>
 </template>
