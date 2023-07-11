@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 
 class RFMService {
     public static function rfm($subQuery, $rfmPrms) {
@@ -44,6 +45,8 @@ class RFMService {
             when ? <= monetary then 3 
             when ? <= monetary then 2 
             else 1 end as m', $rfmPrms);
+
+        Log::debug($subQuery->get());
         
         // 5.ランク毎の数を計算する
         $totals = DB::table($subQuery)->count();
@@ -53,6 +56,8 @@ class RFMService {
         ->selectRaw('r, count(r)') 
         ->orderBy('r', 'desc')
         ->pluck('count(r)');
+
+        Log::debug($rCount);
 
         $fCount = DB::table($subQuery) 
         ->groupBy('f')

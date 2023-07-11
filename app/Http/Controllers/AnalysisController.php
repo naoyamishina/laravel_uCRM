@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class AnalysisController extends Controller
 {
     public function index() {
-        $startDate = '2022-08-01'; 
+        $startDate = '2023-08-01'; 
         $endDate = '2023-08-10';
 
         // RFM練習
