@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 class AnalysisController extends Controller
 {
     public function index() {
-        $startDate = '2022-08-01'; 
-        $endDate = '2023-08-10';
+        $startDate = '2023-08-01'; 
+        $endDate = '2023-08-11';
 
         // RFM練習
         // 1. 購買ID毎にまとめる
@@ -57,21 +57,24 @@ class AnalysisController extends Controller
             else 1 end as m', $rfmPrms);
         
         // 5.ランク毎の数を計算する
-        $rCount = DB::table($subQuery) 
-        ->groupBy('r')
-        ->selectRaw('r, count(r)') 
+        $rCount = DB::table($subQuery)
+        ->rightJoin('ranks', 'ranks.rank', '=', 'r')
+        ->groupBy('rank')
+        ->selectRaw('rank as r, count(r)') 
         ->orderBy('r', 'desc')
         ->pluck('count(r)');
 
         $fCount = DB::table($subQuery) 
-        ->groupBy('f')
-        ->selectRaw('f, count(f)') 
+        ->rightJoin('ranks', 'ranks.rank', '=', 'f')
+        ->groupBy('rank')
+        ->selectRaw('rank as f, count(f)') 
         ->orderBy('f', 'desc')
         ->pluck('count(f)');
 
         $mCount = DB::table($subQuery) 
-        ->groupBy('m')
-        ->selectRaw('m, count(m)') 
+        ->rightJoin('ranks', 'ranks.rank', '=', 'm')
+        ->groupBy('rank')
+        ->selectRaw('rank as m, count(m)') 
         ->orderBy('m', 'desc')
         ->pluck('count(m)');
 
@@ -89,12 +92,13 @@ class AnalysisController extends Controller
             $rank--; // rankを1ずつ減らす 
         }
 
-        dd($eachCount, $rCount, $fCount, $mCount);
+        // dd($eachCount, $rCount, $fCount, $mCount);
 
         // 6. RとFで2次元で表示してみる 
         $data = DB::table($subQuery)
-        ->groupBy('r')
-        ->selectRaw('concat("r_", r) as rRank, 
+        ->rightJoin('ranks', 'ranks.rank', '=', 'r')
+        ->groupBy('rank')
+        ->selectRaw('concat("r_", rank) as rRank, 
         count(case when f = 5 then 1 end ) as f_5, 
         count(case when f = 4 then 1 end ) as f_4, 
         count(case when f = 3 then 1 end ) as f_3, 
@@ -103,7 +107,7 @@ class AnalysisController extends Controller
         ->orderBy('rRank', 'desc')
         ->get();
 
-        dd($data);
+        // dd($data);
 
         return Inertia::render('Analysis'); 
     }
