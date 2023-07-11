@@ -6,33 +6,41 @@ const props = defineProps({
 </script>
 
 <template>
-  <div v-if="data.type === 'perDay' || data.type === 'perMonth' || data.type === 'perYear'">
-    <tr v-for="item in data.data" :key="item.date">
+  <div v-if="data.type === 'perDay' || data.type === 'perMonth' || data.type === 'perYear' " class="lg:w-2/3 w-full mx-auto overflow-auto">
+    <table class="table-auto w-full text-left whitespace-no-wrap">
       <thead>
-        <th>日付</th>
-        <th>合計</th> 
+        <tr>
+          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">年月日</th>
+          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">金額</th>
+        </tr>
       </thead>
       <tbody>
-        <td>{{ item.date }} </td>
-        <td>{{ item.total }} </td> 
+        <tr v-for="item in data.data" :key="item.date">
+          <td class="border-b-2 border-gray-200 px-4 py-3">{{ item.date }}</td>
+          <td class="border-b-2 border-gray-200 px-4 py-3">{{ item.total }}</td>
+        </tr>
       </tbody>
-    </tr>
+    </table>
   </div>
 
-  <div v-if="data.type === 'decile' ">
-    <tr v-for="item in data.data" :key="item.date">
+  <div v-if="data.type === 'decile' " class="lg:w-2/3 w-full mx-auto overflow-auto">
+    <table class="table-auto w-full text-left whitespace-no-wrap">
       <thead>
-        <th>グループ</th>
-        <th>平均</th>
-        <th>金額</th> 
-        <th>構成比</th> 
+        <tr>
+          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">グループ</th>
+          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">平均</th>
+          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">合計金額</th>
+          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">構成比</th>
+        </tr>
       </thead>
       <tbody>
-        <td>{{ item.decile }}</td>
-        <td>{{ item.average }}</td>
-        <td>{{ item.totalPerGroup }}</td> 
-        <td>{{ item.totalRatio }}</td>
+        <tr v-for="item in data.data" :key="item.date">
+          <td class="border-b-2 border-gray-200 px-4 py-3">{{ item.decile }}</td>
+          <td class="border-b-2 border-gray-200 px-4 py-3">{{ item.average }}</td>
+          <td class="border-b-2 border-gray-200 px-4 py-3">{{ item.totalPerGroup }}</td>
+          <td class="border-b-2 border-gray-200 px-4 py-3">{{ item.totalRatio }}</td>
+        </tr>
       </tbody>
-    </tr>
+    </table>
   </div>
 </template>
